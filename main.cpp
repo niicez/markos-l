@@ -1,5 +1,7 @@
 #include <iostream>
-#include "memory.hpp"
+
+#include "memory.h"
+#include "offsets.h"
 
 using namespace std;
 
@@ -20,15 +22,15 @@ int main()
 
 	cout << "[+] process handle: " << processHandle << endl;
 
-	int baseAddress = Memory.GetModuleBase(processHandle, TARGET_PROCESS_NAME);
+	int baseAddress = Game::ModuleBaseAddress;
 
 	cout << "[+] base address: 0x" << hex << baseAddress << endl;
 
-	int localPlayerPtr = Memory.GetPointerAddress(processHandle, baseAddress + 0x0018b0b8, new int[2]{0x0, 0x404}, 2);
+	int localPlayerPtr = Memory.GetPointerAddress(processHandle, baseAddress + Game::LocalPlayer::Entity, new int[2] {0x0, 0x0}, 2);
 
-	cout << "[!] local player ptr: " << hex << localPlayerPtr << endl;
+	cout << "[!] local player ptr: 0x" << hex << localPlayerPtr << endl;
 
-	float healthPtr = Memory.ReadInt(processHandle, localPlayerPtr + 0x4);
+	float healthPtr = Memory.ReadInt(processHandle, localPlayerPtr + Game::Entity::Health);
 
 	cout << "[!] health ptr: " << healthPtr << endl;
 
