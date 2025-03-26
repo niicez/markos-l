@@ -11,11 +11,14 @@ namespace Game {
 		constexpr ptrdiff_t Entity = 0x561D4;
 	}
 
-	namespace Entity {
-		constexpr ptrdiff_t Next = 0x4;
+	namespace Entities {
+		constexpr int Next = 0x4;
+
+		constexpr ptrdiff_t Entity = 0x191FCC;
 		constexpr ptrdiff_t Health = 0xEC;
 		constexpr ptrdiff_t PositionX = 0x4;
 		constexpr ptrdiff_t PositionZ = 0x8;
 		constexpr ptrdiff_t PositionY = 0xC;
+		constexpr ptrdiff_t Name = 0x205;
 	}
 }
