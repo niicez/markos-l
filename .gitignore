@@ -1,3 +1,5 @@
+# !libs/*
+
 # Prerequisites
 *.d
 
@@ -14,7 +16,7 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
+# *.dll
 
 # Fortran module files
 *.mod
@@ -24,7 +26,7 @@
 *.lai
 *.la
 *.a
-*.lib
+# *.lib
 
 # Executables
 *.exe
@@ -196,31 +198,3 @@ packages/*
 *.tmp
 _ReSharper*/
 ComponentArt/
-
-# Artifacts from builds of native code
-########################################
-*.lib
-*.dll
-*.exp
-*.ilk
-*.map
-*.ncb
-*.obj
-*.pch
-*.res
-*.sbr
-*.tlb
-*.tli
-*.tlh
-*.tmp
-
-# Other files
-#############
-*.DotSettings.user
-*.DotSettings
-*.dbproj.schemaview
-*.vspscc
-*.vssscc
-*.tlog
-*.ipch/
-*.dbmdl
