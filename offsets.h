@@ -9,6 +9,7 @@ namespace Game {
 
 	namespace LocalPlayer {
 		constexpr ptrdiff_t Entity = 0x561D4;
+		constexpr uintptr_t ViewMatrix = 0x0057DFD0;
 	}
 
 	namespace Entities {

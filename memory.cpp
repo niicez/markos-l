@@ -1,5 +1,8 @@
 #include <iostream>
+
 #include "memory.h"
+#include "vector3.h"
+#include "types.h"
 
 #pragma warning(disable: 6385 6386)
 
@@ -188,3 +191,24 @@ char* Memory::ReadPointerText(HANDLE processHandle, int startAddress, int offset
 
     return ReadText(processHandle, GetPointerAddress(processHandle, startAddress, offsets, offsetCount));
 }
+
+template <typename T>
+T Memory::Read(HANDLE processHandle, int startAddress) {
+    // TODO: error handle 
+    /*if (startAddress == -1)
+        return -1;*/
+
+    T buffer;
+    SIZE_T NumberOfBytesToRead = sizeof(buffer); //this is equal to 4
+    SIZE_T NumberOfBytesActuallyRead;
+
+    ReadProcessMemory(processHandle, (LPCVOID)startAddress, &buffer, NumberOfBytesToRead, &NumberOfBytesActuallyRead);
+
+    //BOOL success = 
+    /*if (!success || NumberOfBytesActuallyRead != NumberOfBytesToRead)
+        return -1;*/
+    return buffer;
+}
+
+template Vector3 Memory::Read<Vector3>(HANDLE processHandle, int startAddress);
+template ViewMatrix Memory::Read<ViewMatrix>(HANDLE processHandle, int startAddress);
