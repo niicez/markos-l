@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <array>
 
 using namespace std;
@@ -12,3 +13,5 @@ struct Vector2 {
 struct Vector4 {
 	float x, y, z, w;
 };
+
+using ListEntity = vector<Vector2>;

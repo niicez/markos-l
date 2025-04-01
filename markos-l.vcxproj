@@ -130,13 +130,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="entities.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="memory.cpp" />
+    <ClCompile Include="overlay.cpp" />
     <ClCompile Include="rendering.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="entities.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="offsets.h" />
+    <ClInclude Include="overlay.h" />
     <ClInclude Include="rendering.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="vector3.h" />
