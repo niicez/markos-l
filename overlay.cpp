@@ -3,6 +3,7 @@
 #include "overlay.h"
 #include "entities.h"
 #include "types.h"
+#include "rendering.h"
 #include "memory.h"
 
 using namespace std;
@@ -29,7 +30,7 @@ int Overlay::Initialize() {
 	glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, true);
 	glfwWindowHint(GLFW_MOUSE_PASSTHROUGH, true);
 
-	this->window = glfwCreateWindow(800, 800, "My Overlay", NULL, NULL);
+	this->window = glfwCreateWindow(1280, 720, "My Overlay", NULL, NULL);
 	if (!this->window) {
 		cerr << "Failed to create GLFW window" << endl;
 		glfwTerminate();
@@ -44,17 +45,31 @@ int Overlay::Initialize() {
 
 void Overlay::Render() {
 	glClear(GL_COLOR_BUFFER_BIT);
-
-	glColor3f(1.0f, 1.0f, 1.0f);
-	glBegin(GL_LINES);
+	glEnable(GL_LINE_SMOOTH);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	ListEntity listEntity = Entities::getEntities(this->processHandle, this->memory);
-	for (Vector2 entity : listEntity) {
+
+	for (Test entity : listEntity) {
+
+		glLineWidth(5.0f);
+		glColor3f(0.0f, 0.0f, 0.0f);
+		glBegin(GL_LINES);
 		glVertex2f(0.0f, -1.0f);
-		glVertex2f(entity.x, entity.y);
+		glVertex2f(entity.screenPosition.x, entity.screenPosition.y);
+		glEnd();
+
+		glLineWidth(2.0f);
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glBegin(GL_LINES);
+		glVertex2f(0.0f, -1.0f);
+		glVertex2f(entity.screenPosition.x, entity.screenPosition.y);
+		glEnd();
+
+		Rendering::DrawBox(entity.tester.x, entity.tester.y, entity.tester.w, entity.tester.h);
 	}
 
-	glEnd();
 }
 
 int Overlay::Run() {

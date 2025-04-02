@@ -14,4 +14,16 @@ struct Vector4 {
 	float x, y, z, w;
 };
 
-using ListEntity = vector<Vector2>;
+struct Test2 {
+	float x;
+	float y;
+	float w;
+	float h;
+};
+ 
+struct Test {
+	Vector2 screenPosition;
+	Test2 tester;
+};
+
+using ListEntity = vector<Test>;

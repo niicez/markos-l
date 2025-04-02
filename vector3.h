@@ -74,4 +74,15 @@ public:
 	{
 		return sqrt(x * x + y * y + z * z);
 	}
+	float Distance(Vector3& other) const {
+		return sqrt(pow(other.x - x, 2) + pow(other.y - y, 2) + pow(other.z - z, 2));
+	}
+	void Normalize() {
+		float length = std::sqrt(x * x + y * y + z * z);
+		if (length != 0.0f) {
+			x /= length;
+			y /= length;
+			z /= length;
+		}
+	}
 };
