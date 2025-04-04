@@ -23,7 +23,7 @@ Vector2 Rendering::WorldToScreen(Vector3 worldPosition, ViewMatrix& viewMatrix) 
 }
 
 void Rendering::DrawBox(float x, float y, float w, float h) {
-	/* Border of Box Line */
+	/* Border */
 	glLineWidth(5.0f);
 	glColor3f(0.0f, 0.0f, 0.0f);
 	glBegin(GL_LINE_LOOP);
@@ -34,11 +34,44 @@ void Rendering::DrawBox(float x, float y, float w, float h) {
 	glEnd();
 
 	glLineWidth(2.0f);
-	glColor3f(0.0f, 1.0f, 0.0f);
+	glColor3f(1.0f, 0.0f, 0.0f);
 	glBegin(GL_LINE_LOOP);
 	glVertex2f(w, y);
 	glVertex2f(w, h);
 	glVertex2f(x, h);
 	glVertex2f(x, y);
+	glEnd();
+}
+
+void Rendering::DrawLine(float x, float y) {
+	/* Border */
+	glLineWidth(5.0f);
+	glColor3f(0.0f, 0.0f, 0.0f);
+	glBegin(GL_LINES);
+	glVertex2f(0.0f, -1.0f);
+	glVertex2f(x, y);
+	glEnd();
+
+	glLineWidth(2.0f);
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glBegin(GL_LINES);
+	glVertex2f(0.0f, -1.0f);
+	glVertex2f(x, y);
+	glEnd();
+}
+
+void Rendering::DrawCircle(float cx, float cy, float radius) {
+	glBegin(GL_LINE_LOOP);
+
+	float segment = 360.0f;
+	float aspectRatio = 720.0f / 1280;
+
+	for (int i = 0; i < segment; i++) {
+		float angle = 2.0f * 3.1415926f * i / segment;
+		float x = radius * cosf(angle) * aspectRatio;
+		float y = radius * sinf(angle);
+		glVertex2f(cx + x, cy + y);
+	}
+
 	glEnd();
 }

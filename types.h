@@ -20,10 +20,14 @@ struct Test2 {
 	float w;
 	float h;
 };
- 
+
 struct Test {
 	Vector2 screenPosition;
 	Test2 tester;
+	float healthBar;
+	float healthBar2;
+	float health;
+	float barHeight;
 };
 
 using ListEntity = vector<Test>;

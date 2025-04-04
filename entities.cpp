@@ -31,7 +31,7 @@ ListEntity Entities::getEntities(HANDLE processHandle, Memory& memory) {
 
 		Vector2 topScreen = Rendering::WorldToScreen(headPosition + Vector3({ 0.0f, 0.0f, 0.7f }), viewMatrix);
 		Vector2 bottomScreen = Rendering::WorldToScreen(footPosition + Vector3({0.0f, 0.0f, -0.5f}), viewMatrix);
-		
+
 		if (bottomScreen.x == -2.0f) continue;
 
 		float height = bottomScreen.y - topScreen.y;
@@ -41,6 +41,9 @@ ListEntity Entities::getEntities(HANDLE processHandle, Memory& memory) {
 		float top = topScreen.y;
 		float right = topScreen.x + (width / 3);
 		float bottom = bottomScreen.y;
+
+		float healthBarPositionRight = right + (width / 10.0f);
+		float healthBarPositionLeft = right + (width / 7.85f);
 
 		Test2 tester {
 			left,
@@ -52,6 +55,10 @@ ListEntity Entities::getEntities(HANDLE processHandle, Memory& memory) {
 		listEntity.push_back(Test {
 			bottomScreen,
 			tester,
+			healthBarPositionRight,
+			healthBarPositionLeft,
+			health,
+			height,
 		});
 	}
 
