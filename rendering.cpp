@@ -1,7 +1,7 @@
 #include "rendering.h"
 
 Vector2 Rendering::WorldToScreen(Vector3 worldPosition, ViewMatrix& viewMatrix) {
-	Vector4 clipPosition;
+	Vector4 clipPosition = {};
 
 	clipPosition.y = worldPosition.x * viewMatrix[0][1] + worldPosition.y * viewMatrix[1][1] + worldPosition.z * viewMatrix[2][1] + viewMatrix[3][1];
 	clipPosition.x = worldPosition.x * viewMatrix[0][0] + worldPosition.y * viewMatrix[1][0] + worldPosition.z * viewMatrix[2][0] + viewMatrix[3][0];
@@ -14,37 +14,34 @@ Vector2 Rendering::WorldToScreen(Vector3 worldPosition, ViewMatrix& viewMatrix) 
 	}
 
 	// Normalized Device Coodinates (NDC)
-	Vector2 ndcPosition;
+	Vector2 ndcPosition = {};
 	ndcPosition.x = clipPosition.x / clipPosition.w;
 	ndcPosition.y = clipPosition.y / clipPosition.w;
-	//ndcPosition.z = clipPosition.z / clipPosition.w;
 
 	return ndcPosition;
 }
 
-void Rendering::DrawBox(float x, float y, float w, float h) {
-	/* Border */
+void Rendering::DrawBox(const EntityBox& entityBox) {
 	glLineWidth(5.0f);
 	glColor3f(0.0f, 0.0f, 0.0f);
 	glBegin(GL_LINE_LOOP);
-	glVertex2f(w, y);
-	glVertex2f(w, h);
-	glVertex2f(x, h);
-	glVertex2f(x, y);
+	glVertex2f(entityBox.right, entityBox.top);
+	glVertex2f(entityBox.right, entityBox.bottom);
+	glVertex2f(entityBox.left, entityBox.bottom);
+	glVertex2f(entityBox.left, entityBox.top);
 	glEnd();
 
 	glLineWidth(2.0f);
 	glColor3f(1.0f, 0.0f, 0.0f);
 	glBegin(GL_LINE_LOOP);
-	glVertex2f(w, y);
-	glVertex2f(w, h);
-	glVertex2f(x, h);
-	glVertex2f(x, y);
+	glVertex2f(entityBox.right, entityBox.top);
+	glVertex2f(entityBox.right, entityBox.bottom);
+	glVertex2f(entityBox.left, entityBox.bottom);
+	glVertex2f(entityBox.left, entityBox.top);
 	glEnd();
 }
 
-void Rendering::DrawLine(float x, float y) {
-	/* Border */
+void Rendering::DrawSnapLine(float x, float y) {
 	glLineWidth(5.0f);
 	glColor3f(0.0f, 0.0f, 0.0f);
 	glBegin(GL_LINES);
@@ -73,5 +70,30 @@ void Rendering::DrawCircle(float cx, float cy, float radius) {
 		glVertex2f(cx + x, cy + y);
 	}
 
+	glEnd();
+}
+
+static float getDecreaseHealthBar(float health, float top) {
+	float maxHealth = 100.0f;
+	float decreaseHealthPercent = ((maxHealth - health) / maxHealth) * 100.0f;
+
+	return top * (decreaseHealthPercent / 100.0f);
+}
+
+void Rendering::DrawHealthBar(const float& health, const HealthBar& healthBar, const EntityBox& entityBox) {
+	float decreaseHealthBar = getDecreaseHealthBar(health, healthBar.height);
+
+	glLineWidth(5.0f);
+	glColor3f(0.0f, 0.0f, 0.0f);
+	glBegin(GL_LINES);
+	glVertex2f(healthBar.left, entityBox.bottom);
+	glVertex2f(healthBar.left, entityBox.top);
+	glEnd();
+
+	glLineWidth(2.0f);
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glBegin(GL_LINES);
+	glVertex2f(healthBar.left, entityBox.bottom);
+	glVertex2f(healthBar.left, entityBox.top + decreaseHealthBar);
 	glEnd();
 }

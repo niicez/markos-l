@@ -47,41 +47,15 @@ int Overlay::Initialize() {
 	return 0;
 }
 
-float CalculateHealthBarTopByHealth(float health, float top) {
-	float maxHealth = 100.0f;
-	float decreaseHealthPercent = ((maxHealth - health) / maxHealth) * 100.0f;
-
-	return top * (decreaseHealthPercent / 100.0f);
-}
-
 void Overlay::Render() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	ListEntity listEntity = Entities::getEntities(this->processHandle, this->memory);
 
-	for (Test entity : listEntity) {
-		/* Draw Health bar */
-		float d = CalculateHealthBarTopByHealth(entity.health, entity.barHeight);
-
-		glLineWidth(5.0f);
-		glColor3f(0.0f, 0.0f, 0.0f);
-		glBegin(GL_LINES);
-		glVertex2f(entity.healthBar2, entity.tester.y);
-		glVertex2f(entity.healthBar2, entity.tester.h);
-		glEnd();
-
-		glLineWidth(2.0f);
-		glColor3f(0.0f, 1.0f, 0.0f);
-		glBegin(GL_LINES);
-		glVertex2f(entity.healthBar2, entity.tester.y + d);
-		glVertex2f(entity.healthBar2, entity.tester.h);
-		glEnd();
-
-		//Rendering::DrawLine(entity.screenPosition.x, entity.screenPosition.y);
-		Rendering::DrawBox(entity.tester.x, entity.tester.y, entity.tester.w, entity.tester.h);
-		//Rendering::DrawCircle(entity.head.x, entity.head.y, entity.headSize);
+	for (const ListEntityValue& entity : listEntity) {
+		Rendering::DrawBox(entity.entityBox);
+		Rendering::DrawHealthBar(entity.health, entity.healthBar, entity.entityBox);
 	}
-
 }
 
 int Overlay::Run() {

@@ -14,20 +14,24 @@ struct Vector4 {
 	float x, y, z, w;
 };
 
-struct Test2 {
-	float x;
-	float y;
-	float w;
-	float h;
+struct EntityBox {
+	float top;
+	float bottom;
+	float left;
+	float right;
 };
 
-struct Test {
-	Vector2 screenPosition;
-	Test2 tester;
-	float healthBar;
-	float healthBar2;
+struct HealthBar {
+	float height;
+	float right;
+	float left;
+};
+
+struct ListEntityValue {
+	EntityBox entityBox;
+	HealthBar healthBar;
+	
 	float health;
-	float barHeight;
 };
 
-using ListEntity = vector<Test>;
+using ListEntity = vector<ListEntityValue>;
