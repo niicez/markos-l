@@ -45,13 +45,19 @@ ListEntity Entities::getEntities(HANDLE processHandle, Memory& memory) {
 
 	ViewMatrix viewMatrix = memory.Read<ViewMatrix>(processHandle, Game::LocalPlayer::ViewMatrix);
 	ListEntity listEntity = {};
+	
+	int entitySize = memory.ReadInt(processHandle, Game::ModuleBaseAddress + Game::Entities::EntitySize);
+	if (entitySize == -1) {
+		std::cout << "Entity size is -1" << std::endl;
+		return listEntity;
+	}
 
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < entitySize; i++) {
 
 		int offsets[2] = {i * Game::Entities::Next, 0x0};
-		int entity = memory.GetPointerAddress(processHandle, Game::ModuleBaseAddress + Game::Entities::Entity, offsets, 2);
+		int entity = memory.GetPointerAddress(processHandle, Game::ModuleBaseAddress + Game::Entities::EntityList, offsets, 2);
 		if (entity == -1) continue;
-
+		
 		/* NOTE: memory leak, fix later */
 		/*char* name = memory.ReadText(processHandle, entity + Game::Entities::Name);
 		if (name == "-1") continue;*/
@@ -65,7 +71,7 @@ ListEntity Entities::getEntities(HANDLE processHandle, Memory& memory) {
 		Vector2 head2D = Rendering::WorldToScreen(headPosition + Vector3({ 0.0f, 0.0f, 0.7f }), viewMatrix);
 		Vector2 foot2D = Rendering::WorldToScreen(footPosition + Vector3({0.0f, 0.0f, -0.5f}), viewMatrix);
 
-		if (foot2D.x == -2.0f) continue;
+		if (foot2D.x == -2.0f || head2D.x == -2.0f) continue;
 
 		EntityBox entityBox = getEntityBox(head2D, foot2D);
 		HealthBar healthBar = getEntityHealthBar(head2D, foot2D);

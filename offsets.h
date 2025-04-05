@@ -15,7 +15,8 @@ namespace Game {
 	namespace Entities {
 		constexpr int Next = 0x4;
 
-		constexpr ptrdiff_t Entity = 0x191FCC;
+		constexpr ptrdiff_t EntityList = 0x191FCC;
+		constexpr ptrdiff_t EntitySize = 0x191FD4;
 		constexpr ptrdiff_t Health = 0xEC;
 		constexpr ptrdiff_t Name = 0x205;
 

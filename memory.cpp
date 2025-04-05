@@ -212,3 +212,4 @@ T Memory::Read(HANDLE processHandle, int startAddress) {
 
 template Vector3 Memory::Read<Vector3>(HANDLE processHandle, int startAddress);
 template ViewMatrix Memory::Read<ViewMatrix>(HANDLE processHandle, int startAddress);
+template uintptr_t Memory::Read<uintptr_t>(HANDLE processHandle, int startAddress);
