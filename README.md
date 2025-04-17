@@ -5,7 +5,7 @@ Game version: 1.3.0.2
 
 
 ### Showcase:
-[![Showcase](https://imgur.com/a/NPHgyHw)
+[https://imgur.com/a/NPHgyHw](https://i.imgur.com/xasv5SL.png)
 
 ## Features
 - ESP (Extra-Sensory Perception)
